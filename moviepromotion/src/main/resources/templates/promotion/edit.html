@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Sửa Khuyến mãi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5" style="max-width: 500px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Sửa Khuyến mãi</h2>
+
+            <form th:action="@{/promotions/edit/{id}(id=${promotion.id})}" th:object="${promotion}" method="post">
+
+                <div class="mb-3">
+                    <label class="form-label">Tiêu đề:</label>
+                    <input type="text" th:field="*{title}" class="form-control" placeholder="Tiêu đề"/>
+                    <div class="text-danger mt-1" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ngày bắt đầu:</label>
+                    <input type="date" th:field="*{startDate}" class="form-control"/>
+                    <div class="text-danger mt-1" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ngày kết thúc:</label>
+                    <input type="date" th:field="*{endDate}" class="form-control"/>
+                    <div class="text-danger mt-1" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Mức giảm giá:</label>
+                    <input type="number" th:field="*{discountAmount}" class="form-control" placeholder="Mức giảm"/>
+                    <div class="text-danger mt-1" th:if="${#fields.hasErrors('discountAmount')}" th:errors="*{discountAmount}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Chi tiết:</label>
+                    <textarea th:field="*{details}" class="form-control" rows="4" placeholder="Chi tiết"></textarea>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Cập nhật</button>
+                    <a th:href="@{/promotions}" class="btn btn-secondary">Quay lại</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

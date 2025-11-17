@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Danh sách Khuyến mãi</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Danh sách Khuyến mãi</h1>
+        <a th:href="@{/promotions/add}" class="btn btn-primary">Thêm khuyến mãi</a>
+    </div>
+
+    <div th:if="${message}" class="alert alert-success text-center" role="alert">
+        <span th:text="${message}"></span>
+    </div>
+
+    <form th:action="@{/promotions}" method="get" class="row g-3 mb-4 align-items-end">
+        <div class="col-md-3">
+            <label for="discount" class="form-label">Mức giảm giá</label>
+            <input type="number" id="discount" name="discount" class="form-control" placeholder="VNĐ">
+        </div>
+        <div class="col-md-3">
+            <label for="start" class="form-label">Ngày bắt đầu</label>
+            <input type="date" id="start" name="start" class="form-control">
+        </div>
+        <div class="col-md-3">
+            <label for="end" class="form-label">Ngày kết thúc</label>
+            <input type="date" id="end" name="end" class="form-control">
+        </div>
+        <div class="col-md-3 d-grid">
+            <button type="submit" class="btn btn-success">Tìm kiếm</button>
+        </div>
+    </form>
+
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle text-center">
+            <thead class="table-primary">
+            <tr>
+                <th>Tiêu đề</th>
+                <th>Thời gian bắt đầu</th>
+                <th>Thời gian kết thúc</th>
+                <th>Mức giảm giá</th>
+                <th>Chi tiết</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${promotions}">
+                <td th:text="${p.title}"></td>
+                <td th:text="${p.startDate}"></td>
+                <td th:text="${p.endDate}"></td>
+                <td th:text="${p.discountAmount}"></td>
+                <td th:text="${p.details}"></td>
+                <td>
+                    <a th:href="@{/promotions/edit/{id}(id=${p.id})}" class="btn btn-warning btn-sm me-1">Sửa</a>
+                    <a href="#"
+                       th:href="@{/promotions/delete/{id}(id=${p.id})}"
+                       th:attr="data-title=${p.title}"
+                       class="btn btn-danger btn-sm delete">
+                        Xóa
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    document.querySelectorAll('.delete').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            var title = link.getAttribute('data-title');
+            if (!confirm('Bạn có chắc muốn xóa chương trình "' + title + '" không?')) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
